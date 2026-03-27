@@ -1,0 +1,3 @@
+*.idea*
+*.venv*
+*EEG_mouse_data_test.csv
