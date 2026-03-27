@@ -39,3 +39,10 @@ sleep stages into "sleep" and have "awake" be the other group. Thanks to that, w
 
 We can then use the sigmoid function to normalize our data between 0 and 1. Then, a basic threshold at 0.5 to separate
 our results obtained through the output neuron.
+
+## Part 3 - Competition
+
+### Ideas
+
+- Batch
+- More hidden layers
