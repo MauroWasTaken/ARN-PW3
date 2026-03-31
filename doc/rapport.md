@@ -25,6 +25,18 @@
 - Confusion matrix
 - F1-score (of each class and ‘micro’, there is a parameter for « micro », check sklearn) 
 
+## Notes
+
+We explored a bit the data to better fit our algorithms. Here is a list of different steps done.
+
+Firtly, by taking the same graph we did in practical work 1, we can check how the frequencies are distributes. We can
+then try to find better faatures than take the first 25.
+
+![frequencies2data.png](images/frequencies2data.png)
+
+Thanks to this graph, it is pretty obvious that there is only a real difference between the first 10 frequencies. It
+is probably possible to further reduce the number of features but we're gonna keep it as a good base for now.
+
 ## Part 1 - Separation awake/sleep
 
 ### Model
