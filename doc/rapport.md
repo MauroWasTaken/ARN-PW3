@@ -61,7 +61,13 @@ our results obtained through the output neuron.
 | 2   | 0.001         | 0.8      | 150       | mse  | 32         | 59.61%     |       |
 | 3   | 0.5           | 0.8      | 200       | mse  | 8          | 80.33%     |       |
 | 4   | 0.2           | 0.8      | 400       | mse  | 8          | 82.63%     |       |
-| 5   | 0.5           | 0.8      | 400       | mse  | 8          | 85.18%     |       |
+| 5   | 0.2           | 0.8      | 1000      | mse  | 8          | 85.18%     |       |
+
+It seems we get the best results with a high enough learning rate. We can higher the number of epoch to have a
+better f1 score. This doesn't seem to learn the training data too much so it's not overfitting yet. One thing to
+take into account is simply that it's not viable for now to train on such a long period of time.
+
+For the rest of this part, we will use the no5 as our baselines as 85% is already a good start.
 
 ### Training history plot
 
@@ -71,10 +77,36 @@ As we can see, the training went decently well with a gradual descent. The only 
 Because of that, it is quite hard to make tests on it. We could have batching to improve that time but this would be
 implemented in part 3.
 
+A strange aspect is that after 600 epochs we start to have better results for validation data than training. This
+could be because our validation data is easier to guess or we simply learned it through our choice of parameters.
+
+Again, there is a rapid descent for the first 200 epochs but it has a harder time later on. This could be improved
+through other ways.
+
 ### Analysis of results
 
-With only 2 outputs possible, it is quite easy to implement the code for it. Taking the first 25 features does help
-a bit with the results. We can obtain 81% instead of 78%.
+With only 2 outputs possible, it is quite easy to implement the code for it. We can now check the confusion matrices
+to see better how our model performs.
+
+![part1_confusion_matrix_fold1](images/part1_confusionmatrix_fold1.png)
+
+![part1_confusion_matrix_fold2](images/part1_confusionmatrix_fold2.png)
+
+![part1_confusion_matrix_fold3](images/part1_confusionmatrix_fold3.png)
+
+![part1_confusion_matrix_global](images/part1_confusionmatrix_global.png)
+
+- AccuracySleep​ = 11775 / 16503 ​≈ 0.713 = 71.3%
+- AccuracyAwake = 23034 / 24360 ≈ 0.946 = 94.6%
+
+It is quite apparent even in the confusion matrices that when a mouseis awake, we guess mostly right with a 94.6%
+accuracy. The problem comes from when it sleeps. We only have a success rate of 71.3% letting about 3/10 guesses
+wrong. This is certainly what's pejorating our results.
+
+Ways to improve this model are numerous. The problems range from a slow learning process to quite poor results even
+with many epochs and decent parameters. We can hope to fix most of these problems in part3 with new ideas to
+implement. It is worrying for part2 results because we only got so much f1 score already. We can predict it could
+be lower because we have a new class or that the error will simply divide itself in the new class.
 
 ## Part 2 - Separation awake/rem/non-rem
 
@@ -92,7 +124,6 @@ a bit with the results. We can obtain 81% instead of 78%.
 | 5   | 2      | [64, 32]  | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.36%     | deeper |
 | 6   | 2      | [128, 64] | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.26%     |        |
 | 7   | 2      | [16, 32]  | relu       | Adam      | 0.0005 | 32    | 100    | categorical_crossentropy | 84.30%     |        |
-| 8   | 2      | [32]      | tanh       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.21%     |        |
 | 8   | 2      | [32]      | tanh       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.21%     |        |
 
 ## Part 3 - Competition
