@@ -59,12 +59,13 @@ our results obtained through the output neuron.
 | 0   | 0.1           | 0.8      | 100       | mse  | 8          | 78.59%     |       |
 | 1   | 0.01          | 0.9      | 100       | mse  | 16         | 76.79%     |       |
 | 2   | 0.001         | 0.8      | 150       | mse  | 32         | 59.61%     |       |
-
-
+| 3   | 0.5           | 0.8      | 200       | mse  | 8          | 80.33%     |       |
+| 4   | 0.2           | 0.8      | 400       | mse  | 8          | 82.63%     |       |
+| 5   | 0.5           | 0.8      | 400       | mse  | 8          | 85.18%     |       |
 
 ### Training history plot
 
-![part1_training](images/part1_training)
+![part1_training](images/part1_training.png)
 
 As we can see, the training went decently well with a gradual descent. The only real problem is the time it takes.
 Because of that, it is quite hard to make tests on it. We could have batching to improve that time but this would be
