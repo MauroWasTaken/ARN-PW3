@@ -52,7 +52,7 @@ sleep stages into "sleep" and have "awake" be the other group. Thanks to that, w
 We can then use the sigmoid function to normalize our data between 0 and 1. Then, a basic threshold at 0.5 to separate
 our results obtained through the output neuron.
 
-### Performances result
+### Performance results
 
 | Idx | Learning rate | Momentum | nb epochs | loss | Nb neurons | F1 (micro) | Notes |
 |-----|---------------|----------|-----------|------|------------|------------|-------|
@@ -66,6 +66,9 @@ our results obtained through the output neuron.
 It seems we get the best results with a high enough learning rate. We can higher the number of epoch to have a
 better f1 score. This doesn't seem to learn the training data too much so it's not overfitting yet. One thing to
 take into account is simply that it's not viable for now to train on such a long period of time.
+
+Although the learning rate is quite high and seems to be not that stable at the start, it balances itself quickly.
+A learning rate of 0.1 or 0.2 feels the right choice. Anything lower would make the training last years.
 
 For the rest of this part, we will use the no5 as our baselines as 85% is already a good start.
 
@@ -112,7 +115,15 @@ be lower because we have a new class or that the error will simply divide itself
 
 ### Model
 
-### Testing
+This time, the goal is to have a similar model to part1 but separate it into 3 classes.
+
+- max(output_neurons) = idx0 => 'w' (awake)
+- max(output_neurons) = idx1 => 'r' (rem sleep)
+- max(output_neurons) = idx2 => 'n' (non-rem sleep)
+
+### Performance results
+
+CHECK IF THIS TABLE IS STILL TRUE (done on batch iirc)
 
 | Exp | Layers | Units     | Activation | Optimizer | LR     | Batch | Epochs | Loss                     | F1 (micro) | Notes  |
 |-----|--------|-----------|------------|-----------|--------|-------|--------|--------------------------|------------|--------|
@@ -126,9 +137,25 @@ be lower because we have a new class or that the error will simply divide itself
 | 7   | 2      | [16, 32]  | relu       | Adam      | 0.0005 | 32    | 100    | categorical_crossentropy | 84.30%     |        |
 | 8   | 2      | [32]      | tanh       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.21%     |        |
 
+### Training history plot
+
+### Analysis of results
+
 ## Part 3 - Competition
 
 ### Ideas
 
 - Batch
 - More hidden layers
+
+### Model
+
+explain at least how one idea is implemented...
+
+### Performance results
+
+### Training history plot
+
+### Analysis of results
+
+## Conclusion
