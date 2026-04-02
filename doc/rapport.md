@@ -14,7 +14,10 @@
 - EEG_mouse_data_1.csv - mouse number 1
 - EEG_mouse_data_2.csv - mouse number 2
 - EEG_mouse_data_test.csv - mouse number 3 (only for testing part 3)
-- ...
+- lab3_part1.ipynb - part 1 with awake/sleep
+- lab3_part2.ipynb - part 2 with awake/rem/non-rem
+- lab3_part3.ipynb - part 3 with optimizations
+- test_pred.npy - results from part 3 using lab3_part3.ipynb with the best parameters we found
 
 ### Guidelines
 
@@ -277,7 +280,17 @@ We got a pretty high accuracy score for the training data, which is a good sign 
 
 ## Conclusion
 
+Through this lab, we saw how to classify with a single neuron into 2 classes and how to do multi-classing thanks to multi-neuron outputs.
+We had to search through different parameters to find way to lower the loss through time both quickly but also with good results. It is
+also important to try different tools to try and improve the model.
+
+We could have improved this model even further, but it was mainly a tool to learn the different aspects of making a neuron network. It
+seems obvious now that some things were wrongly done. Especially, we did not write our initial tests with our parameters down. During this
+early phase, we got some really good results around 90% f1. The best way would have been to make a report from the start to retrieve all
+our foundings and make a dataset of possible parameters.
+
+Despite the problems, we ended up making a functional prediction algorithm.
+
 ## AI disclaimer
 
-The code delivered in this practical work was highly AI assisted. We mainly used AI to help us adapt the code from the previous practical works to more quickly be able to get into the interesting part of the lab.
-
+The code delivered in this practical work was highly AI assisted. We mainly used AI to help us adapt the code from the previous practical works to more quickly be able to get into the interesting part of the lab. It is important to note no AI was used to write this report and all the code was supervised by us. The choice of parameters was also part of our work finetuning the model to get better results.
