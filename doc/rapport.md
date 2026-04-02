@@ -43,6 +43,8 @@ sleep stages into "sleep" and have "awake" be the other group. Thanks to that, w
 We can then use the sigmoid function to normalize our data between 0 and 1. Then, a basic threshold at 0.5 to separate
 our results obtained through the output neuron.
 
+<div style="page-break-before: always;"></div>
+
 ### Performance results
 
 | Idx | Learning rate | Momentum | nb epochs | loss | Nb neurons | F1 (micro) | Notes |
@@ -52,7 +54,7 @@ our results obtained through the output neuron.
 | 2   | 0.001         | 0.8      | 150       | mse  | 32         | 59.61%     |       |
 | 3   | 0.5           | 0.8      | 200       | mse  | 8          | 81.99%     |       |
 | 4   | 0.2           | 0.8      | 400       | mse  | 8          | 82.63%     |       |
-| 5   | 0.2           | 0.8      | 1000      | mse  | 8          | 85.18%     |       |
+| 5   | 0.2           | 0.8      | 1000      | mse  | 8          | 85.99%     |       |
 
 It seems we get the best results with a high enough learning rate. We can higher the number of epoch to have a
 better f1 score. This doesn't seem to learn the training data too much so it's not overfitting yet. One thing to
@@ -77,6 +79,8 @@ could be because our validation data is easier to guess or we simply learned it 
 Again, there is a rapid descent for the first 200 epochs but it has a harder time later on. This could be improved
 through other ways.
 
+<div style="page-break-before: always;"></div>
+
 ### Analysis of results
 
 With only 2 outputs possible, it is quite easy to implement the code for it. We can now check the confusion matrices
@@ -90,11 +94,13 @@ to see better how our model performs.
 
 ![part1_confusion_matrix_global](images/part1_confusionmatrix_global.png)
 
-- AccuracySleep​ = 11775 / 16503 ​≈ 0.713 = 71.3%
-- AccuracyAwake = 23034 / 24360 ≈ 0.946 = 94.6%
+<div style="page-break-before: always;"></div>
 
-It is quite apparent even in the confusion matrices that when a mouseis awake, we guess mostly right with a 94.6%
-accuracy. The problem comes from when it sleeps. We only have a success rate of 71.3% letting about 3/10 guesses
+- AccuracySleep = 12543 / (12543 + 3960) = 12543 / 16503 ≈ 0.760 = 76.0%
+- AccuracyAwake = 22596 / (22596 + 1764) = 22596 / 24360 ≈ 0.928 = 92.8%
+
+It is quite apparent even in the confusion matrices that when a mouseis awake, we guess mostly right with a 92.8%
+accuracy. The problem comes from when it sleeps. We only have a success rate of 76.0% letting about 1/4 guesses
 wrong. This is certainly what's pejorating our results.
 
 Ways to improve this model are numerous. The problems range from a slow learning process to quite poor results even
@@ -132,6 +138,8 @@ We changed the loss and have pretty good result with a low learning rate and aro
 
 We will keep the 88.14% as that's a good average for now and there was less overfitting than the other ones.
 
+<div style="page-break-before: always;"></div>
+
 ### Training history plot
 
 ![part2_training](images/part2_training.png)
@@ -141,6 +149,8 @@ descent. It seems likely that having a higher number of epochs would keep improv
 comes with overfitting. It's still a good result for the small tests we did.
 
 We can see that the validation has a slightly higher loss. It's quite marginal though.
+
+<div style="page-break-before: always;"></div>
 
 ### Analysis of results
 
@@ -153,6 +163,8 @@ Here are the confusion matrices for this stage.
 ![part2_confusion_matrix_fold3](images/part2_confusionmatrix_fold3.png)
 
 ![part2_confusion_matrix_global](images/part2_confusionmatrix_global.png)
+
+<div style="page-break-before: always;"></div>
 
 Despite us having more classes to sort, we end up with a very good. It does seem our model prefers to say awake
 probably because of the sheer number of awake hours for a mouse. We can see that we predict awake and get it 
@@ -182,6 +194,8 @@ is probably possible to further reduce the number of features but might make the
 #### Temporal learning
 
 This was probably the ace up our sleeve. After a lot of looking around, we found that we could use the data from the previous epochs to better help train the current one. therefore we implemented it using the 4 previous epochs as input for the current one.
+
+<div style="page-break-before: always;"></div>
 
 #### Class weights
 
@@ -227,6 +241,8 @@ fit_kwargs = dict(
 ```
 
 we also had to adapt the number of input features to 50 (our 10 features  * (number of previous epochs + current epoch))
+
+<div style="page-break-before: always;"></div>
 
 ### Hyperparameters
 
