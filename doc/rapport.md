@@ -115,15 +115,15 @@ of those number to say of which class the data is from.
 
 ### Performance results
 
-| Exp | Layers | Units     | Activation | Optimizer | LR     | Momentum | Epochs | Loss                     | F1 (micro) | Notes  |
-|-----|--------|-----------|------------|-----------|--------|----------|--------|--------------------------|------------|--------|
-| 0   | 1      | [32]      | relu       | Adam      | 0.1    | 0.8      | 100    | categorical_crossentropy | 87.52%     | Overfitting |
-| 1   | 1      | [32]      | relu       | Adam      | 0.01   | 0.8      | 100    | categorical_crossentropy | 76.73%     |        |
-| 2   | 1      | [4]       | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 76.73%     |        |
-| 3   | 1      | [16]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 83.95%     |        |
-| 4   | 1      | [32]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.25%     |        |
-| 5   | 1      | [64]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.55%     |        |
-| 6   | 1      | [32]      | relu       | Adam      | 0.0005 | 0.8      | 100    | categorical_crossentropy | 84.21%     |        |
+| Exp | Layers | Units     | Activation | Optimizer | LR     | Momentum | Epochs | Loss                     | F1 (micro) | Notes              |
+|-----|--------|-----------|------------|-----------|--------|----------|--------|--------------------------|------------|--------------------|
+| 0   | 1      | [32]      | relu       | Adam      | 0.1    | 0.8      | 100    | categorical_crossentropy | 87.52%     | Overfitting        |
+| 1   | 1      | [32]      | relu       | Adam      | 0.01   | 0.8      | 100    | categorical_crossentropy | 88.02%     | Overfitting        |
+| 2   | 1      | [4]       | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 87.59%     | No overfitting     |
+| 3   | 1      | [16]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 88.10%     | Slight overfitting |
+| 4   | 1      | [32]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 88.26%     | Slight overfitting |
+| 5   | 1      | [64]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.55%     | CHECK       |
+| 6   | 1      | [32]      | relu       | Adam      | 0.0005 | 0.8      | 100    | categorical_crossentropy | 84.21%     | CHECK       |
 
 
 
