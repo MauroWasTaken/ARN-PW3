@@ -25,18 +25,6 @@
 - Confusion matrix
 - F1-score (of each class and ‘micro’, there is a parameter for « micro », check sklearn) 
 
-## Notes
-
-We explored a bit the data to better fit our algorithms. Here is a list of different steps done.
-
-Firtly, by taking the same graph we did in practical work 1, we can check how the frequencies are distributes. We can
-then try to find better faatures than take the first 25.
-
-![frequencies2data.png](images/frequencies2data.png)
-
-Thanks to this graph, it is pretty obvious that there is only a real difference between the first 10 frequencies. It
-is probably possible to further reduce the number of features but we're gonna keep it as a good base for now.
-
 ## Part 1 - Separation awake/sleep
 
 ### Model
@@ -57,7 +45,7 @@ our results obtained through the output neuron.
 | Idx | Learning rate | Momentum | nb epochs | loss | Nb neurons | F1 (micro) | Notes |
 |-----|---------------|----------|-----------|------|------------|------------|-------|
 | 0   | 0.1           | 0.8      | 100       | mse  | 8          | 78.59%     |       |
-| 1   | 0.01          | 0.9      | 100       | mse  | 16         | 76.79%     |       |
+| 1   | 0.01          | 0.8      | 100       | mse  | 16         | 76.79%     |       |
 | 2   | 0.001         | 0.8      | 150       | mse  | 32         | 59.61%     |       |
 | 3   | 0.5           | 0.8      | 200       | mse  | 8          | 80.33%     |       |
 | 4   | 0.2           | 0.8      | 400       | mse  | 8          | 82.63%     |       |
@@ -121,21 +109,23 @@ This time, the goal is to have a similar model to part1 but separate it into 3 c
 - max(output_neurons) = idx1 => 'r' (rem sleep)
 - max(output_neurons) = idx2 => 'n' (non-rem sleep)
 
+This means that we need 3 neurons as outputs. We can then have each neuron represent a class. The number we get per
+neuron is how "sure" the algorithm is that it is effectively that class. As a final output, we can take the biggest
+of those number to say of which class the data is from.
+
 ### Performance results
 
-CHECK IF THIS TABLE IS STILL TRUE (done on batch iirc)
+| Exp | Layers | Units     | Activation | Optimizer | LR     | Momentum | Epochs | Loss                     | F1 (micro) | Notes  |
+|-----|--------|-----------|------------|-----------|--------|----------|--------|--------------------------|------------|--------|
+| 0   | 1      | [32]      | relu       | Adam      | 0.1    | 0.8      | 100    | categorical_crossentropy | 87.52%     | Overfitting |
+| 1   | 1      | [32]      | relu       | Adam      | 0.01   | 0.8      | 100    | categorical_crossentropy | 76.73%     |        |
+| 2   | 1      | [4]       | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 76.73%     |        |
+| 3   | 1      | [16]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 83.95%     |        |
+| 4   | 1      | [32]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.25%     |        |
+| 5   | 1      | [64]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.55%     |        |
+| 6   | 1      | [32]      | relu       | Adam      | 0.0005 | 0.8      | 100    | categorical_crossentropy | 84.21%     |        |
 
-| Exp | Layers | Units     | Activation | Optimizer | LR     | Batch | Epochs | Loss                     | F1 (micro) | Notes  |
-|-----|--------|-----------|------------|-----------|--------|-------|--------|--------------------------|------------|--------|
-| 0   | 1      | [4]       | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 76.73%     |        |
-| 1   | 1      | [16]      | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 83.95%     |        |
-| 2   | 1      | [32]      | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.25%     |        |
-| 3   | 1      | [64]      | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.55%     |        |
-| 4   | 2      | [32, 16]  | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.47%     |        |
-| 5   | 2      | [64, 32]  | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.36%     | deeper |
-| 6   | 2      | [128, 64] | relu       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.26%     |        |
-| 7   | 2      | [16, 32]  | relu       | Adam      | 0.0005 | 32    | 100    | categorical_crossentropy | 84.30%     |        |
-| 8   | 2      | [32]      | tanh       | Adam      | 0.001  | 32    | 100    | categorical_crossentropy | 84.21%     |        |
+
 
 ### Training history plot
 
@@ -149,6 +139,11 @@ CHECK IF THIS TABLE IS STILL TRUE (done on batch iirc)
 
 After further analysis of the data that was given to us, we noticed that the first 10 frequencies were the ones that had most noticeable changes during the different stages. Therefore, we decided to reduce the number of features to 10 instead of 25 in a hope to have a better performance and faster training time.
 
+![frequencies2data.png](images/frequencies2data.png)
+
+Thanks to this graph, it is pretty obvious that there is only a real difference between the first 10 frequencies. It
+is probably possible to further reduce the number of features but might make the results worse.
+
 #### Temporal learning
 
 This was probably the ace up our sleeve. After a lot of looking around, we found that we could use the data from the previous epochs to better help train the current one. therefore we implemented it using the 4 previous epochs as input for the current one.
@@ -156,6 +151,9 @@ This was probably the ace up our sleeve. After a lot of looking around, we found
 #### Class weights
 
 We noticed that the data was quite unbalanced with a lot more awake samples than sleep ones. Therefore, we decided to use class weights to give more importance to the sleep samples and try to balance the data a bit better. this makes it so that the model is penalized more when it makes a mistake on rem and not rem sleep samples.
+
+We noticed in earlier sections that we couldn't guess sleep samples that well. This might come from
+the sheer amount of awake samples. Thanks to this fix, we should be able to improve our micro f1 score.
 
 #### Early stopping
 
