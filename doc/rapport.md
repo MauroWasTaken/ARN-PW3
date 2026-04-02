@@ -145,17 +145,88 @@ CHECK IF THIS TABLE IS STILL TRUE (done on batch iirc)
 
 ### Ideas
 
-- Batch
-- More hidden layers
+#### Feature selection
+After further analysis of the data that was given to us, we noticed that the first 10 frequencies were the ones that had most noticeable changes during the different stages. Therefore, we decided to reduce the number of features to 10 instead of 25 in a hope to have a better performance and faster training time.
 
+#### Temporal learning
+This was probably the ace up our sleeve. After alot of looking around, we found that we could use the data from the previous epochs to better help train the current one. therefore we implemented it using the 4 previous epochs as input for the current one.
+
+#### Class weights
+We noticed that the data was quite unbalanced with a lot more awake samples than sleep ones, we have way more Awake samples than sleep ones. Therefore, we decided to use class weights to give more importance to the sleep samples and try to balance the data a bit more. this makes it so that the model is penalized more when it makes a mistake on rem and not rem sleep samples.
+
+#### Early stopping
+To avoid overfitting and to save time, we implemented early stopping. This way, we can stop the training when the validation loss starts to plateau or increase, which is a sign that the model is starting to overfit the training data. When this happens, the training is stopped and the best model is saved.
+
+#### Learning Rate Reduction 
+To further improve the training process, we implemented learning rate reduction. Which reduces the learning rate when the validation loss plateaus, allowing the model to more precisely tune its weights and potentially achieve better performance.
 ### Model
 
-explain at least how one idea is implemented...
+To implement the temporal learning we firstly added a function that allows us to to shift the data from the previous epochs to be used as input for the current epoch.
+```python
+temporal_window = 4
+def make_past_context_features(X, window=4):
+    # Builds [x(t-window), ..., x(t-1), x(t)] for each sample at time t
+    n, d = X.shape
+    context_parts = []
+    for lag in range(window, 0, -1):
+        shifted = np.empty_like(X)
+        shifted[:lag] = X[0]
+        shifted[lag:] = X[:-lag]
+        context_parts.append(shifted)
+    context_parts.append(X)
+    return np.hstack(context_parts)
+
+model_input_data = make_past_context_features(input_data, window=temporal_window)
+```
+This model input data is then used when training like so:
+```python
+fit_kwargs = dict(
+    x=model_input_data,
+    ...)
+```
+we also had to adapt the number of input features to 50 (our 10 features  * (number of previous epochs + current epoch))
+### Hyperparameters
+```python
+MODEL_CONFIG = {
+    ##model parameters
+  "input_dim": 50,
+  "hidden_units": [32],
+  ##training parameters
+  "learning_rate": 0.1,
+  "batch_size": 32,
+  "epochs": 300,
+  ## early stop parameters
+  "early_stopping_patience": 15,
+  ## learning rate reduction parameters
+  "reduce_lr_patience": 5,
+  "reduce_lr_factor": 0.5,
+  "min_lr": 1e-5,
+}
+``` 
+These hyperparameters were found by trying different combinations and analysing how the training history plot looked like. Thanks to some of our optimizations, we were able to take way less time training our model which allowed us to try more combinations.
+### Workflow
+In order to find our the best parameters, we did made a copy of the experiment used in part 2 and we added all the different ideas in order to get a better view of how each of them impacted the results. We then did a grid search on the different parameters to find the best combination of them. We also used the validation data to check the performance of our model and look for signs of overfitting.
+![alt text](image-3.png)
+
+We ended up our training with a 0.90 micro f1-score using the same sets as in part 2
+![alt text](image-2.png)
+
+Hhose parameters would be copied on to the part 3 notebook so we could train with the whole data and generate the .npy file for the competitoin.
 
 ### Performance results
+Our best model ended up with an accuracy of 0.92 with the training data and a loss of 0.1475 as seen below.
+![alt text](image.png)
 
 ### Training history plot
+![alt text](image-1.png)
 
+We got this training history plot that really shows the impact of reducing the learning rate and early stopping, allowing us to both start with higher learn rates and also still converge quite fast.
 ### Analysis of results
+We got a pretty high accuracy score for the tranining data, which is a good sign that our model is learning well, but might also be a sign of overfitting and since we don't have the test data labels, it's hard to know for sure.
+
 
 ## Conclusion
+
+## AI disclaimer
+The code delivered in this practical work was highly ai assisted. we mainly used ai to help us adapt the code from the previous practical works to more quickly be able to get into the interesting part of the lab.
+
