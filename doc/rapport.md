@@ -251,11 +251,11 @@ These hyperparameters were found by trying different combinations and analysing 
 
 In order to find our the best parameters, we did made a copy of the experiment used in part 2 and we added all the different ideas in order to get a better view of how each of them impacted the results. We then did a grid search on the different parameters to find the best combination of them. We also used the validation data to check the performance of our model and look for signs of overfitting.
 
-![alt text](image-3.png)
+![part3_workflow1](images/part3_workflow1.png)
 
 We ended up our training with a 0.90 micro f1-score using the same sets as in part 2.
 
-![alt text](image-2.png)
+![part3_workflow2](images/part3_workflow2.png)
 
 Those parameters would be copied on to the part 3 notebook so we could train with the whole data and generate the .npy file for the competitoin.
 
@@ -263,11 +263,11 @@ Those parameters would be copied on to the part 3 notebook so we could train wit
 
 Our best model ended up with an accuracy of 0.92 with the training data and a loss of 0.1475 as seen below.
 
-![alt text](image.png)
+![part3_performanceresults](images/part3_performanceresults.png)
 
 ### Training history plot
 
-![alt text](image-1.png)
+![part3_training](images/part3_training.png)
 
 We got this training history plot that really shows the impact of reducing the learning rate and early stopping, allowing us to both start with higher learn rates and also still converge quite fast.
 
