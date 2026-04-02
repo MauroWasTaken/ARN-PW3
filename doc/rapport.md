@@ -228,5 +228,6 @@ We got a pretty high accuracy score for the tranining data, which is a good sign
 ## Conclusion
 
 ## AI disclaimer
-The code delivered in this practical work was highly ai assisted. we mainly used ai to help us adapt the code from the previous practical works to more quickly be able to get into the interesting part of the lab.
+
+The code delivered in this practical work was highly AI assisted. We mainly used AI to help us adapt the code from the previous practical works to more quickly be able to get into the interesting part of the lab.
 
