@@ -122,14 +122,46 @@ of those number to say of which class the data is from.
 | 2   | 1      | [4]       | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 87.59%     | No overfitting     |
 | 3   | 1      | [16]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 88.10%     | Slight overfitting |
 | 4   | 1      | [32]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 88.26%     | Slight overfitting |
-| 5   | 1      | [64]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 84.55%     | CHECK       |
-| 6   | 1      | [32]      | relu       | Adam      | 0.0005 | 0.8      | 100    | categorical_crossentropy | 84.21%     | CHECK       |
+| 5   | 1      | [64]      | relu       | Adam      | 0.001  | 0.8      | 100    | categorical_crossentropy | 88.21%     | Slight overfitting |
+| 6   | 1      | [32]      | relu       | Adam      | 0.0005 | 0.8      | 100    | categorical_crossentropy | 88.14%     | No overfitting     |
 
+We changed the loss and have pretty good result with a low learning rate and around 32 neurons.
 
+We will keep the 88.14% as that's a good average for now and there was less overfitting than the other ones.
 
 ### Training history plot
 
+![part2_training](images/part2_training.png)
+
+Thanks to the low learning rates and the other parameters, we have a good curve without interferences during the
+descent. It seems likely that having a higher number of epochs would keep improving the micro f1 but this might
+comes with overfitting. It's still a good result for the small tests we did.
+
+We can see that the validation has a slightly higher loss. It's quite marginal though.
+
 ### Analysis of results
+
+Here are the confusion matrices for this stage.
+
+![part2_confusion_matrix_fold1](images/part2_confusionmatrix_fold1.png)
+
+![part2_confusion_matrix_fold2](images/part2_confusionmatrix_fold2.png)
+
+![part2_confusion_matrix_fold3](images/part2_confusionmatrix_fold3.png)
+
+![part2_confusion_matrix_global](images/part2_confusionmatrix_global.png)
+
+Despite us having more classes to sort, we end up with a very good. It does seem our model prefers to say awake
+probably because of the sheer number of awake hours for a mouse. We can see that we predict awake and get it 
+wrong more than a 1000 times for both REM and non-REM stages. We could definitely improve this by giving more
+weight to those in part3.
+
+Another problem is still the time it takes. Thanks to a different loss value, we can have pretty good results
+with less epochs. The problem is still that it takes a few minutes to test anything.
+
+Although we have one more parameter, it does not seem to give way worse results than part1 which is a good
+surprise. This may come from how we changed the model to have the 3 output neurons or the loss. Because of
+that, we had to make a new batch of tests and made progress on that end.
 
 ## Part 3 - Competition
 
